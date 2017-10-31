@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-  	<v-header></v-header>
-	<nav>
+  	<v-header :seller="seller"></v-header>
+	<nav class="border-1px">
     	<div class="nav-item">
     		<router-link to="/goods">商品</router-link>
     	</div>
@@ -18,7 +18,20 @@
 
 <script>
 import header from 'components/header/header';
+const ERR_OK = 0;
 export default {
+  data() {
+    return {
+      seller: {}
+    };
+  },
+  created() {
+    this.$http.get('/api/seller').then(response => {
+      if (response.body.errno === ERR_OK) {
+        this.seller = response.body.data;
+      }
+    });
+  },
   components: {
   'v-header': header
   }
@@ -26,18 +39,21 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-	nav
-		display: flex
-		width: 100%
-		height: 40px
-		line-height: 40px
-		.nav-item
-			flex: 1
-			text-align: center
-			font-size: 14px
-			color: rgb(77,85,93)
-			&>a
-				display:block
-				&.active
-					color:rgb(240,20,20)
+  @import "./common/stylus/mixin.styl"
+
+  nav
+    display: flex
+    width: 100%
+    height: 40px
+    line-height: 40px
+    border-1px(rgba(7, 17, 27, 0.1))
+    .nav-item
+      flex: 1
+      text-align: center
+      & > a
+        display: block
+        font-size: 14px
+        color: rgb(77, 85, 93)
+        &.active
+          color: rgb(240, 20, 20)
 </style>
