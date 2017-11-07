@@ -36,17 +36,21 @@
     	<div class="mask" v-show="maskShow">
     		<div class="details-wrap clearfix">
     			<div class="details-main">
-    				
+    				<h1 class="name">
+    					<span>{{seller.name}}</span>
+    				</h1>
+    				<star :scores="seller.score" :size="48"></star>
     			</div>
     		</div>
     		<div class="details-close">
-    			<i class="icon-close"></i>
+    			<i class="icon-close" @click="closeMask"></i>
     		</div>
     	</div>
     </div>
 </template>
 
 <script type="ecmascript-6">
+	import star from 'components/star/star';
     export default{
     	props:{
     		seller:{
@@ -61,10 +65,16 @@
     	methods: {
     		showMask(){
     			this.maskShow = true;
+    		},
+    		closeMask(){
+    			this.maskShow = false;
     		}
     	},
     	created(){
     		this.supportClassMap = ['decrease','discount','special','invoice','guarantee'];
+    	},
+    	components:{
+    		star
     	}
     };
 </script>
@@ -191,10 +201,15 @@
 			overflow: auto
 			background: rgba(7,17,27,0.8)
 			.details-wrap
+				width: 100%
 				min-height: 100%
 				.details-main
 					margin-top: 64px
 					padding-bottom: 64px
+					.name
+						line-height: 16px
+						text-align: center
+						font-size: 16px
 			.details-close
 				position:relative
 				width: 32px
@@ -202,15 +217,6 @@
 				margin: -64px auto 0 auto
 				clear: both
 				font-size: 32px
-
-
-
-
-
-
-
-
-
 
 
 
