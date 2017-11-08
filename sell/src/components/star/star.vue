@@ -23,7 +23,6 @@
     			return "star-"+this.size;
     		},
     		itemClasses(){
-    			debugger;
     			let result = [];
     			let score  = Math.round(this.scores *2) / 2;
     			let hasHalfStar = score%1 !== 0

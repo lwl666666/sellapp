@@ -7,7 +7,6 @@
     		<div class="content">
     			<div class="title">
     				<span class="brand">
-    					<img src="" alt="">
     				</span>
     				<span class="name">
     					{{seller.name}}
@@ -39,7 +38,18 @@
     				<h1 class="name">
     					<span>{{seller.name}}</span>
     				</h1>
-    				<star :scores="seller.score" :size="48"></star>
+    				<star class="star" :scores="seller.score" :size="48"></star>
+					<v-hr :content="discountStr"></v-hr>
+					<ul class="supports" v-if="seller.supports.length>0">
+						<li v-for="support in seller.supports" class="support">
+							<span class="icon" :class="supportClassMap[support.type]"></span>
+    						<span class="text">{{support.description}}</span>
+						</li>
+					</ul>
+					<v-hr :content="supportStr"></v-hr>
+					<div class="bulletin">
+						<p class="content">{{seller.bulletin}}</p>
+					</div>
     			</div>
     		</div>
     		<div class="details-close">
@@ -51,6 +61,7 @@
 
 <script type="ecmascript-6">
 	import star from 'components/star/star';
+	import hr from 'components/hr/hr';
     export default{
     	props:{
     		seller:{
@@ -59,7 +70,9 @@
     	},
     	data(){
     		return {
-    			maskShow: false
+    			maskShow: false,
+    			discountStr:"优惠信息",
+    			supportStr: "商家公告"
     		}
     	},
     	methods: {
@@ -74,7 +87,8 @@
     		this.supportClassMap = ['decrease','discount','special','invoice','guarantee'];
     	},
     	components:{
-    		star
+    		star,
+    		"v-hr": hr
     	}
     };
 </script>
@@ -210,6 +224,46 @@
 						line-height: 16px
 						text-align: center
 						font-size: 16px
+					.star
+						margin 16px 0 28px 0
+						text-align: center
+					.supports
+						width: 80%
+						margin: 0 auto;
+						font-size: 0;
+						.support
+							height: 16px
+							margin-bottom: 12px
+							.icon
+								display: inline-block
+								width: 16px
+								height: 16px
+								margin: 0 6px 0 12px
+								background-repeat: no-repeat
+								background-size: 16px 16px
+								vertical-align:top
+								&.decrease
+									bg-image("decrease_2")
+								&.discount
+									bg-image("discount_2")
+								&.special
+									bg-image("special_2")
+								&.invoice
+									bg-image("invoice_2")
+								&.guarantee
+									bg-image("guarantee_2")
+							.text
+								font-size: 12px
+								line-height: 16px
+							&:last-child
+								margin-bottom: 0
+					.bulletin
+						width: 80%
+						margin 0 auto
+						.content
+							padding: 0 12px
+							font-size: 12px
+							line-height: 24px
 			.details-close
 				position:relative
 				width: 32px
